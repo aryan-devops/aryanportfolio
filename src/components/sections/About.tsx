@@ -5,17 +5,17 @@ export default function About() {
     const skillCategories = [
         {
             title: "Frontend",
-            skills: ["HTML", "CSS", "JavaScript", "React", "Next.js", "Tailwind"],
+            skills: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind", "HTML5", "CSS3"],
             delay: 0
         },
         {
-            title: "Backend",
-            skills: ["Node.js", "Express", "Firebase", "MongoDB", "SQL"],
+            title: "Backend & AI",
+            skills: ["Node.js", "Express", "Python", "REST API", "Groq AI", "Socket.io"],
             delay: 0.2
         },
         {
-            title: "Other",
-            skills: ["Python", "Java", "Data Analysis", "DevOps basics"],
+            title: "Database & Tools",
+            skills: ["Firebase", "MongoDB", "SQL", "Git", "Vercel"],
             delay: 0.4
         }
     ]
