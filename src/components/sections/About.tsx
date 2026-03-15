@@ -48,10 +48,12 @@ export default function About() {
                 >
                     <div className="clay-card p-8 md:p-12 h-full flex items-center">
                         <p className="text-xl leading-relaxed text-slate-700 dark:text-slate-300">
-                            <strong className="text-2xl block mb-4 text-slate-900 dark:text-white">Hi there!</strong>
-                            Aryan Pandey is a Full-Stack Developer with hands-on experience building scalable web applications, real-time platforms, and modern web solutions.
+                            <strong className="text-2xl block mb-4 text-slate-900 dark:text-white">Hey, I'm Aryan 👋</strong>
+                            I'm a Full-Stack Developer who genuinely loves building things for the web — from real-time multiplayer games to AI-powered tools that actually solve problems.
                             <br /><br />
-                            He specializes in creating intuitive UI/UX, efficient backend systems, and interactive web experiences using modern technologies. Passionate about problem-solving and clean code, Aryan continuously exploring new tools to bring creative ideas to life.
+                            I care a lot about the details — clean code, smooth UX, and making sure what I build actually <em>feels</em> good to use. Whether it's a snappy frontend or a solid backend, I try to bring the same energy to every layer of the stack.
+                            <br /><br />
+                            I'm always picking up something new — right now I'm exploring AI integrations and modern data architectures. If it's an interesting problem, I'm in.
                         </p>
                     </div>
                 </motion.div>
