@@ -1,57 +1,51 @@
 import { motion } from 'framer-motion'
-import { Briefcase, Calendar } from 'lucide-react'
 
 export default function Experience() {
     return (
-        <section id="experience" className="py-24 relative z-10">
-            <div className="mb-16 text-center md:text-left">
+        <section id="experience" className="py-32 relative border-t border-white/5">
+            <div className="mb-24">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
                 >
-                    <div className="flex items-center gap-4 justify-center md:justify-start mb-4">
-                        <div className="p-3 clay-card text-purple-accent rounded-2xl">
-                            <Briefcase size={28} />
-                        </div>
-                        <h2 className="text-4xl md:text-5xl font-bold font-heading">Experience</h2>
+                    <div className="inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
+                        <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white/60">Career</span>
                     </div>
-                    <div className="w-24 h-1.5 bg-gradient-to-r from-purple-accent to-electric-blue rounded-full mx-auto md:mx-0"></div>
+                    <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight text-white mb-6">Experience</h2>
                 </motion.div>
             </div>
 
-            <div className="max-w-4xl border-l-2 border-purple-accent/30 ml-4 md:ml-6 pl-8 md:pl-12 relative">
+            <div className="max-w-4xl relative">
                 <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    className="relative"
+                    transition={{ duration: 1, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
+                    className="outer-shell"
                 >
-                    {/* Timeline Dot */}
-                    <div className="absolute -left-[41px] md:-left-[57px] top-6 w-5 h-5 rounded-full bg-purple-accent border-4 border-[#f0f4f8] dark:border-[#0f172a] shadow-md z-10"></div>
-
-                    <div className="clay-card p-8 md:p-10 relative overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-purple-accent to-electric-blue opacity-50"></div>
-
-                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <div className="inner-core">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
                             <div>
-                                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">Full Stack Developer</h3>
-                                <h4 className="text-lg text-purple-accent font-medium">Exabyte Technologies</h4>
+                                <h3 className="text-2xl font-heading font-medium text-white mb-2">Full Stack Developer</h3>
+                                <div className="flex items-center gap-3">
+                                    <h4 className="text-lg text-white/60">Exabyte Technologies</h4>
+                                    <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                                    <span className="text-sm text-white/40 uppercase tracking-wider">Bilaspur, India</span>
+                                </div>
                             </div>
 
-                            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-black/20 px-4 py-2 rounded-full text-sm font-medium w-max">
-                                <Calendar size={16} />
-                                <span>Dec 2021 – Dec 2022</span>
+                            <div className="inline-flex px-3 py-1 rounded-full border border-white/10 bg-white/5 w-max">
+                                <span className="text-xs font-medium text-white/60">Dec 2021 – Dec 2022</span>
                             </div>
                         </div>
 
-                        <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm uppercase tracking-wider font-semibold">
-                            Bilaspur, India
-                        </p>
-
-                        <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                            Developed multiple dynamic websites for clients using different frameworks, backend integrations, and user-interactive features. Contributed to building responsive user interfaces and robust APIs to ensure scalable solutions.
-                        </p>
+                        <div className="text-white/60 leading-relaxed font-light space-y-4">
+                            <p>
+                                Developed multiple dynamic websites for clients using modern frameworks and backend integrations. Contributed to building responsive user interfaces and robust APIs to ensure scalable and maintainable digital solutions.
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
             </div>
