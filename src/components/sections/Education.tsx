@@ -1,86 +1,73 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Education() {
-  const education = [
+  const targetRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const edu = [
     {
-      degree: "MCA - Master of Computer Applications",
-      institution: "Amity University Raipur",
-      period: "2025 – 2027",
-      achievement: null,
+      deg: "MCA",
+      uni: "AMITY UNIVERSITY",
+      loc: "RAIPUR",
+      date: "AUG 2025 — JUN 2027",
     },
     {
-      degree: "BCA - Bachelor of Computer Applications",
-      institution: "Disha College",
-      period: "2021 – 2024",
-      achievement: "Awarded Mr. Fresher",
+      deg: "BCA",
+      uni: "DISHA COLLEGE",
+      loc: "KOTA",
+      date: "OCT 2021 — MAR 2024",
     },
   ];
 
   return (
-    <section id="education" className="py-32 relative border-t border-white/5">
-      <div className="mb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
-        >
-          <div className="inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white/60">
-              Background
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight text-white mb-6">
-            Education
-          </h2>
-        </motion.div>
-      </div>
+    <section
+      ref={targetRef}
+      id="education"
+      className="py-48 px-6 md:px-12 max-w-7xl mx-auto relative border-t border-subtle"
+    >
+      <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-24">
+        Education
+      </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
-        {education.map((edu, i) => (
+      <div className="relative pl-8 md:pl-24">
+        {/* Scroll-driven line */}
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10 overflow-hidden">
           <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{
-              duration: 1,
-              delay: i * 0.1,
-              ease: [0.32, 0.72, 0, 1],
-            }}
-            className="outer-shell"
-          >
-            <div className="inner-core h-full flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl md:text-2xl font-heading font-medium text-white mb-2 leading-tight">
-                  {edu.degree}
-                </h3>
-                <h4 className="text-lg text-white/60 font-light mb-8">
-                  {edu.institution}
-                </h4>
-              </div>
+            style={{ height: yLine }}
+            className="w-full bg-[#f04823]"
+          ></motion.div>
+        </div>
 
-              <div className="flex flex-col gap-4">
-                <div className="inline-flex px-3 py-1 rounded-full border border-white/10 bg-white/5 w-max">
-                  <span className="text-xs font-medium text-white/60">
-                    {edu.period}
-                  </span>
-                </div>
-
-                {edu.achievement && (
-                  <div className="mt-4 pt-4 border-t border-white/5">
-                    <p className="text-xs uppercase tracking-widest text-white/40 font-semibold mb-1">
-                      Achievement
-                    </p>
-                    <p className="text-sm font-medium text-white/80">
-                      {edu.achievement}
-                    </p>
-                  </div>
-                )}
+        <div className="flex flex-col gap-32">
+          {edu.map((e, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-200px" }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col gap-4 relative"
+            >
+              <span className="text-xl text-[#f04823] font-bold tracking-widest uppercase">
+                {e.date}
+              </span>
+              <h3 className="text-6xl md:text-8xl font-heading font-medium text-white uppercase tracking-tight leading-none">
+                {e.deg}
+              </h3>
+              <div className="flex items-center gap-6 text-sm font-bold uppercase tracking-widest text-white/60 mt-4">
+                <span>{e.uni}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f04823]"></span>
+                <span>{e.loc}</span>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

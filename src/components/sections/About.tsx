@@ -1,80 +1,82 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function About() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yText = useTransform(scrollYProgress, [0, 0.5, 1], [150, 0, -150]);
+  const opacityText = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0, 1, 1, 0],
+  );
+
+  const yContent = useTransform(scrollYProgress, [0.3, 0.6, 1], [100, 0, -100]);
+  const opacityContent = useTransform(
+    scrollYProgress,
+    [0.3, 0.5, 0.8, 1],
+    [0, 1, 1, 0],
+  );
+
   return (
     <section
+      ref={containerRef}
       id="about"
-      className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-subtle"
+      className="min-h-[150vh] relative bg-[#0a0a0a] flex flex-col items-center justify-center py-32 px-6"
     >
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
-        {/* Left Side - Heading */}
-        <div className="md:col-span-5 flex flex-col">
-          <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-8">
-            About
-          </h2>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h3 className="text-3xl md:text-5xl font-heading font-medium text-white tracking-tight leading-tight max-w-sm">
-              Full-stack developer focused on building useful software across
-              frontend, backend, and product experiences.
-            </h3>
-          </motion.div>
+      <motion.div
+        style={{ y: yText, opacity: opacityText }}
+        className="w-full max-w-7xl mx-auto flex flex-col items-center text-center mb-48"
+      >
+        <h2 className="text-[6vw] md:text-[5vw] font-heading font-medium tracking-tighter text-white leading-[0.9] uppercase">
+          Not just a developer.
+          <br />
+          <span className="text-[#f04823]">A Builder.</span>
+        </h2>
+      </motion.div>
+
+      <motion.div
+        style={{ y: yContent, opacity: opacityContent }}
+        className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16"
+      >
+        <div className="md:col-span-5">
+          <h3 className="text-3xl md:text-5xl font-heading font-medium text-white tracking-tight leading-tight">
+            Full-Stack Developer
+          </h3>
+          <p className="text-xl text-white/50 mt-6 leading-relaxed max-w-md">
+            Hands-on experience building and deploying web applications from the
+            database to the interface.
+          </p>
         </div>
 
-        {/* Right Side - Metadata / Timeline */}
-        <div className="md:col-span-7 flex flex-col gap-16 pt-2 md:pt-12">
-          {/* Education Timeline */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-8"
-          >
-            <div className="flex flex-col gap-2 pb-6 border-b border-subtle">
-              <span className="text-xs font-bold text-[#f04823] uppercase tracking-widest">
-                MCA
-              </span>
-              <span className="text-xl text-white">
-                Amity University Raipur
-              </span>
-              <span className="text-sm text-white/40 mt-1">2025 – 2027</span>
-            </div>
-            <div className="flex flex-col gap-2 pb-6 border-b border-subtle">
-              <span className="text-xs font-bold text-[#f04823] uppercase tracking-widest">
-                BCA
-              </span>
-              <span className="text-xl text-white">Disha College</span>
-              <span className="text-sm text-white/40 mt-1">2021 – 2024</span>
-            </div>
-          </motion.div>
-
-          {/* Focus Areas */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-2 gap-8"
-          >
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">
-                Focus
-              </span>
-              <ul className="flex flex-col gap-3 text-white/80">
-                <li>Full-Stack Development</li>
-                <li>Web Applications</li>
-                <li>Backend Systems</li>
-                <li>AI/ML Exploration</li>
-              </ul>
-            </div>
-          </motion.div>
+        <div className="md:col-span-7 flex flex-wrap gap-4 items-start content-start text-sm font-bold uppercase tracking-widest text-white/80">
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            JavaScript
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            React
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            Node.js
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            Express.js
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            PHP
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            MySQL
+          </span>
+          <span className="px-6 py-3 border border-white/10 rounded-full bg-white/5">
+            MongoDB
+          </span>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

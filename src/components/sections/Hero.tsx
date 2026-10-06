@@ -1,69 +1,60 @@
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
+  const yName = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const yRole = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-between pt-32 pb-12 px-6 md:px-12 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-12 w-full mt-12 md:mt-24">
-        {/* Left - Name */}
+    <section ref={containerRef} id="intro" className="h-[150vh] relative">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a]">
+        {/* Changing Background Layer */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col leading-[0.85] tracking-tighter"
+          style={{ opacity: bgOpacity }}
+          className="absolute inset-0 bg-[#0f0f0f] z-0"
+        ></motion.div>
+        <div className="absolute inset-0 grid-bg opacity-20 z-0"></div>
+
+        {/* Typography Composition */}
+        <motion.div
+          style={{ scale }}
+          className="relative z-10 flex flex-col items-center justify-center w-full px-4"
         >
-          <h1 className="text-[12vw] md:text-[8vw] font-heading font-medium text-white uppercase m-0 p-0">
+          <motion.h1
+            style={{ y: yName }}
+            className="text-[12vw] md:text-[14vw] font-heading font-medium tracking-tighter text-white leading-[0.8] uppercase text-center mix-blend-difference"
+          >
             Aryan
             <br />
             Pandey
-          </h1>
+          </motion.h1>
+          <motion.h2
+            style={{ y: yRole }}
+            className="text-[4vw] md:text-[3vw] font-bold text-[#f04823] uppercase tracking-[0.3em] mt-8 text-center mix-blend-difference"
+          >
+            Full-Stack Developer
+          </motion.h2>
         </motion.div>
 
-        {/* Right - Role & Sub */}
+        {/* Metadata */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:items-end text-left md:text-right pt-2 md:pt-4"
+          style={{ opacity }}
+          className="absolute bottom-12 left-6 right-6 md:left-12 md:right-12 flex flex-col md:flex-row justify-between items-center gap-6 z-10 text-xs font-bold uppercase tracking-widest text-white/40"
         >
-          <h2 className="text-2xl md:text-4xl font-heading font-medium text-white/90 uppercase tracking-tight mb-6 leading-tight">
-            Full-Stack
-            <br />
-            Developer
-          </h2>
-          <p className="text-lg md:text-xl text-white/50 max-w-xs text-balance">
-            Building digital products that solve real problems.
-          </p>
+          <span>Raipur, India</span>
+          <span>MCA @ Amity University</span>
+          <span>Scroll to explore</span>
         </motion.div>
       </div>
-
-      {/* Bottom Metadata Bar */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.6 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 w-full border-t border-subtle pt-8 mt-24 text-sm font-medium text-white/40 uppercase tracking-widest"
-      >
-        <div className="flex flex-col gap-2">
-          <span className="text-white/20 text-[10px]">Location</span>
-          <span className="text-white/80">Raipur, IN</span>
-        </div>
-        <div className="flex flex-col gap-2">
-          <span className="text-white/20 text-[10px]">Education</span>
-          <span className="text-white/80">MCA Candidate</span>
-        </div>
-        <div className="flex flex-col gap-2">
-          <span className="text-white/20 text-[10px]">Status</span>
-          <span className="flex items-center gap-2 text-white/80">
-            <span className="w-1.5 h-1.5 bg-[#f04823] rounded-full animate-pulse"></span>
-            Available
-          </span>
-        </div>
-        <div className="flex flex-col gap-2 md:items-end">
-          <span className="text-white/20 text-[10px]">Scroll</span>
-          <ArrowDown size={16} className="text-white/80 animate-bounce mt-1" />
-        </div>
-      </motion.div>
     </section>
   );
 }

@@ -1,73 +1,75 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Experience() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   const experiences = [
     {
-      role: "Full-Stack Developer Intern",
-      company: "Tech Mahindra",
-      period: "June 2024 – Present",
-      location: "Pune, MH",
+      role: "WEB DEVELOPER INTERN",
+      company: "EXBYTE TECHNOLOGY",
+      period: "MARCH 2025 — MAY 2025",
+      location: "BILASPUR",
       points: [
-        "Developing scalable web solutions using React and Node.js.",
-        "Optimizing database queries and backend performance.",
-        "Collaborating with cross-functional teams to deliver enterprise applications.",
+        "Developing scalable web solutions and optimizing backend performance.",
+        "Collaborating with teams to deliver responsive enterprise applications.",
       ],
     },
   ];
 
   return (
     <section
+      ref={containerRef}
       id="experience"
-      className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-subtle"
+      className="min-h-screen py-32 px-6 md:px-12 flex flex-col justify-center relative border-t border-subtle"
     >
-      <div className="mb-24">
-        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-4">
+      <motion.div style={{ y, opacity }} className="max-w-7xl mx-auto w-full">
+        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-24">
           Experience
         </h2>
-      </div>
 
-      <div className="flex flex-col gap-16">
-        {experiences.map((exp, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{
-              duration: 0.8,
-              delay: i * 0.1,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start"
-          >
-            <div className="md:col-span-4 flex flex-col gap-2">
-              <h3 className="text-2xl font-heading font-medium text-white">
-                {exp.role}
-              </h3>
-              <span className="text-lg text-[#f04823]">{exp.company}</span>
-            </div>
-
-            <div className="md:col-span-8 flex flex-col gap-6 pt-1">
-              <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/40">
-                <span>{exp.period}</span>
-                <span className="w-1 h-1 rounded-full bg-white/20"></span>
-                <span>{exp.location}</span>
+        <div className="flex flex-col gap-32">
+          {experiences.map((exp, i) => (
+            <div key={i} className="flex flex-col gap-12">
+              <div className="flex flex-col gap-4">
+                <span className="text-xl text-[#f04823] font-bold tracking-widest uppercase">
+                  {exp.period}
+                </span>
+                <h3 className="text-5xl md:text-7xl font-heading font-medium text-white uppercase tracking-tight leading-none">
+                  {exp.company}
+                </h3>
+                <div className="flex items-center gap-6 text-sm font-bold uppercase tracking-widest text-white/60 mt-4">
+                  <span>{exp.role}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#f04823]"></span>
+                  <span>{exp.location}</span>
+                </div>
               </div>
 
-              <ul className="flex flex-col gap-4 text-base text-white/70 leading-relaxed list-none">
+              <div className="flex flex-col gap-8 border-l-2 border-white/10 pl-8 ml-2">
                 {exp.points.map((point, j) => (
-                  <li
+                  <motion.p
                     key={j}
-                    className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-[#f04823] before:rounded-sm"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: j * 0.2 }}
+                    className="text-xl md:text-2xl text-white/70 leading-relaxed max-w-3xl"
                   >
                     {point}
-                  </li>
+                  </motion.p>
                 ))}
-              </ul>
+              </div>
             </div>
-          </motion.div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 }

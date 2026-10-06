@@ -1,176 +1,165 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 
 export default function Projects() {
-  return (
-    <section id="work" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-      <div className="mb-32">
-        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-4">
+  const targetRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
+
+  // Mobile devices or users who prefer reduced motion shouldn't get the extreme horizontal scroll
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const disableHorizontal = prefersReducedMotion || isMobile;
+
+  const projects = [
+    {
+      num: "01",
+      title: "ANNADATA",
+      type: "AI AGRICULTURAL ADVISOR",
+      image: "/projects/annadata.jpg",
+      desc: "Helping farmers with intelligent crop-related information and location-aware agricultural assistance.",
+      tech: ["React", "Node.js", "MongoDB", "Location API"],
+    },
+    {
+      num: "02",
+      title: "QUIZERR",
+      type: "Online Proctor-Based Quizzing System",
+      image: "/projects/quizerr.jpg",
+      desc: "Automated proctoring platform featuring focus detection, head tracking, and violation monitoring with over 100+ student users.",
+      tech: ["JavaScript", "Node.js", "Supabase", "WebRTC"],
+    },
+    {
+      num: "03",
+      title: "YESHA ENTERPRISES",
+      type: "BUSINESS PLATFORM",
+      image: "/projects/yesha.jpg",
+      desc: "Professional web presence developed for a commercial biofloc fish farming company. Engineered for high SEO performance.",
+      tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    },
+    {
+      num: "04",
+      title: "YESHA BILLING",
+      type: "SOFTWARE",
+      image: "/projects/yesha.jpg", // Reusing image if no specific billing image exists
+      desc: "Practical business billing and invoicing software developed for active day-to-day operations and workflow speed.",
+      tech: ["Electron", "React", "SQLite"],
+    },
+    {
+      num: "05",
+      title: "E-COMMERCE",
+      type: "PLATFORM",
+      image: "/projects/annadata.jpg", // Placeholder until they upload the real one
+      desc: "Full-featured e-commerce platform with product listing, category filtering, authentication, and cart management.",
+      tech: ["PHP", "MySQL", "JavaScript"],
+    },
+  ];
+
+  if (disableHorizontal) {
+    return (
+      <section id="work" className="py-32 px-6 bg-[#0f0f0f]">
+        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-24">
           Selected Work
         </h2>
-        <div className="w-full h-px bg-white/10"></div>
-      </div>
-
-      <div className="flex flex-col gap-40">
-        {/* 01: ANNADATA - Full width / Large Visual */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col gap-8 group cursor-pointer"
-        >
-          <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-[#141414] overflow-hidden border border-subtle relative">
-            <img
-              src="/projects/annadata.jpg"
-              alt="Annadata Interface"
-              className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-              <span className="text-[120px] font-heading font-medium leading-none text-white/20 select-none">
-                01
+        <div className="flex flex-col gap-32">
+          {projects.map((proj) => (
+            <div key={proj.num} className="flex flex-col gap-8">
+              <span className="text-6xl font-heading font-medium text-white/10">
+                {proj.num}
               </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div className="md:col-span-5 flex flex-col gap-4">
-              <h3 className="text-3xl md:text-5xl font-heading font-medium uppercase text-white tracking-tight">
-                Annadata
+              <div className="w-full aspect-video bg-[#141414] border border-subtle overflow-hidden">
+                <img
+                  src={proj.image}
+                  alt={proj.title}
+                  className="w-full h-full object-cover opacity-80"
+                />
+              </div>
+              <h3 className="text-4xl font-heading font-medium text-white uppercase">
+                {proj.title}
               </h3>
-              <p className="text-sm font-bold text-[#f04823] uppercase tracking-widest">
-                AgriTech Web Application
+              <p className="text-[#f04823] text-sm font-bold tracking-widest uppercase">
+                {proj.type}
               </p>
-            </div>
-            <div className="md:col-span-7 flex flex-col justify-between items-start gap-8">
-              <p className="text-lg text-white/60 text-balance leading-relaxed">
-                Helping farmers with intelligent crop-related information and
-                location-aware agricultural assistance. Designed to bridge the
-                gap between deep agricultural data and practical field
-                operations.
+              <p className="text-white/60 text-lg leading-relaxed">
+                {proj.desc}
               </p>
-              <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs font-bold uppercase tracking-widest text-white/40">
-                <span>React</span>
-                <span>Node.js</span>
-                <span>MongoDB</span>
-                <span>Location API</span>
+              <div className="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-widest text-white/40">
+                {proj.tech.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
               </div>
             </div>
-          </div>
-        </motion.div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
-        {/* 02: QUIZERR - Image Left, Text Right */}
+  return (
+    <section
+      ref={targetRef}
+      id="work"
+      className="h-[500vh] bg-[#0f0f0f] relative"
+    >
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-12 group cursor-pointer items-center"
+          style={{ x }}
+          className="flex gap-32 px-[10vw] items-center h-full"
         >
-          <div className="md:col-span-7 w-full aspect-[4/3] bg-[#141414] overflow-hidden border border-subtle relative order-2 md:order-1">
-            <img
-              src="/projects/quizerr.jpg"
-              alt="Quizerr Dashboard"
-              className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]"
-            />
-          </div>
-          <div className="md:col-span-5 flex flex-col gap-6 order-1 md:order-2">
-            <span className="text-6xl font-heading font-medium leading-none text-white/10 select-none">
-              02
-            </span>
-            <h3 className="text-3xl md:text-4xl font-heading font-medium uppercase text-white tracking-tight">
-              Quizerr
-            </h3>
-            <p className="text-sm font-bold text-[#f04823] uppercase tracking-widest">
-              Proctoring Platform
-            </p>
-            <p className="text-base text-white/60 leading-relaxed">
-              Online assessment platform featuring focus detection, head
-              tracking, and violation monitoring. Built to enforce integrity in
-              remote testing environments using real-time analytics.
-            </p>
-            <div className="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-widest text-white/40 mt-4">
-              <span>React</span>
-              <span>Express</span>
-              <span>WebRTC</span>
-              <span>Face-API.js</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 03: YESHA ENTERPRISES - Text Left, Image Right */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-12 group cursor-pointer items-center"
-        >
-          <div className="md:col-span-5 flex flex-col gap-6">
-            <span className="text-6xl font-heading font-medium leading-none text-white/10 select-none">
-              03
-            </span>
-            <h3 className="text-3xl md:text-4xl font-heading font-medium uppercase text-white tracking-tight">
-              Yesha Enterprises
-            </h3>
-            <p className="text-sm font-bold text-[#f04823] uppercase tracking-widest">
-              Business Website
-            </p>
-            <p className="text-base text-white/60 leading-relaxed">
-              Professional web presence developed for a commercial biofloc fish
-              farming company. Engineered for high SEO performance, responsive
-              product presentation, and clear business lead conversion.
-            </p>
-            <div className="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-widest text-white/40 mt-4">
-              <span>Next.js</span>
-              <span>Tailwind CSS</span>
-              <span>Framer Motion</span>
-            </div>
-          </div>
-          <div className="md:col-span-7 w-full aspect-[4/3] bg-[#141414] overflow-hidden border border-subtle relative">
-            <img
-              src="/projects/yesha.jpg"
-              alt="Yesha Enterprises Website"
-              className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]"
-            />
-          </div>
-        </motion.div>
-
-        {/* 04: YESHA BILLING SOFTWARE - Compact Technical Layout */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full border border-subtle bg-[#141414] p-8 md:p-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-12 group cursor-pointer relative overflow-hidden"
-        >
-          <div className="absolute inset-0 grid-bg opacity-30"></div>
-
-          <div className="flex flex-col gap-6 relative z-10 max-w-2xl">
-            <div className="flex items-center gap-6">
-              <span className="text-4xl font-heading font-medium leading-none text-[#f04823] select-none">
-                04
-              </span>
-              <h3 className="text-2xl md:text-3xl font-heading font-medium uppercase text-white tracking-tight">
-                Yesha Billing Software
-              </h3>
-            </div>
-            <p className="text-base text-white/60 leading-relaxed max-w-xl">
-              Practical business billing and invoicing software developed for
-              active day-to-day operations. Focused strictly on data management,
-              workflow speed, and operational reliability rather than flashy UI.
-            </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-bold uppercase tracking-widest text-white/40">
-              <span>Electron</span>
-              <span>React</span>
-              <span>SQLite</span>
-            </div>
+          {/* Intro Slide */}
+          <div className="w-[80vw] md:w-[40vw] flex-shrink-0 flex flex-col gap-8">
+            <h2 className="text-[8vw] md:text-[6vw] font-heading font-medium leading-none text-white tracking-tight uppercase">
+              Selected
+              <br />
+              Work
+            </h2>
+            <p className="text-xl md:text-2xl text-white/40">05 PROJECTS</p>
           </div>
 
-          <div className="relative z-10 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-500 shrink-0">
-            <ArrowUpRight size={20} />
-          </div>
+          {/* Projects */}
+          {projects.map((proj) => (
+            <div
+              key={proj.num}
+              className="w-[85vw] md:w-[70vw] flex-shrink-0 flex flex-col md:flex-row gap-12 md:gap-24 items-center"
+            >
+              <div className="w-full md:w-3/5 aspect-[4/3] md:aspect-[16/9] bg-[#141414] border border-subtle overflow-hidden relative group">
+                <img
+                  src={proj.image}
+                  alt={proj.title}
+                  className="w-full h-full object-cover object-center opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-[0.16,1,0.3,1]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <span className="absolute bottom-6 left-6 text-[150px] font-heading font-medium leading-none text-white/20 select-none pointer-events-none mix-blend-overlay">
+                  {proj.num}
+                </span>
+              </div>
+
+              <div className="w-full md:w-2/5 flex flex-col gap-6">
+                <h3 className="text-4xl md:text-6xl font-heading font-medium text-white uppercase leading-none tracking-tight">
+                  {proj.title}
+                </h3>
+                <p className="text-sm md:text-base font-bold text-[#f04823] tracking-widest uppercase">
+                  {proj.type}
+                </p>
+                <p className="text-lg md:text-2xl text-white/60 leading-relaxed max-w-lg mt-4">
+                  {proj.desc}
+                </p>
+                <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs md:text-sm font-bold uppercase tracking-widest text-white/40 mt-8">
+                  {proj.tech.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

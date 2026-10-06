@@ -1,10 +1,12 @@
 import Layout from "./components/layout/Layout";
 import Hero from "./components/sections/Hero";
-import About from "./components/sections/About";
 import Projects from "./components/sections/Projects";
+import About from "./components/sections/About";
 import Experience from "./components/sections/Experience";
-import Certifications from "./components/sections/Certifications";
 import TechStack from "./components/sections/TechStack";
+import Education from "./components/sections/Education";
+import Publications from "./components/sections/Publications";
+import Certifications from "./components/sections/Certifications";
 import Contact from "./components/sections/Contact";
 
 function App() {
@@ -13,8 +15,10 @@ function App() {
       <Hero />
       <Projects />
       <About />
-      <TechStack />
       <Experience />
+      <TechStack />
+      <Education />
+      <Publications />
       <Certifications />
       <Contact />
     </Layout>

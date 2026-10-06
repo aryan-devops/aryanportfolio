@@ -1,78 +1,51 @@
-import { motion } from "framer-motion";
-
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Certifications() {
+  const targetRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"],
+  });
+
   const certs = [
-    { name: "RESTful API Best Practices", issuer: "Infosys", date: "Oct 2025" },
-    {
-      name: "Interpretable Machine Learning Applications: Part 1",
-      issuer: "Coursera",
-      date: "Oct 2025",
-    },
-    { name: "IBM Data Topology", issuer: "IBM", date: "Oct 2025" },
-    {
-      name: "Fundamentals of Digital Marketing",
-      issuer: "Google Digital Garage",
-      date: "Mar 2023",
-    },
-    { name: "Equity Research", issuer: "Jobaaj.com", date: "Feb 2023" },
-    {
-      name: "Web Designing Using XHTML CSS & Photoshop",
-      issuer: "International Accreditation Forum Inc",
-      date: "Mar 2019",
-    },
-    {
-      name: "Android with Core PHP",
-      issuer: "Rays IT Design World",
-      date: "Apr 2021",
-    },
-    {
-      name: "Facial Recognition Application",
-      issuer: "HCL GUVI",
-      date: "Apr 2021",
-    },
+    "Git Version Control",
+    "Core PHP and Android",
+    "Java",
+    "Facial Recognition with Python",
+    "HTML5 / CSS3 / JavaScript",
+    "RESTful API Best Practices",
+    "Interpretable Machine Learning Applications",
   ];
 
   return (
     <section
+      ref={targetRef}
       id="certifications"
-      className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-subtle"
+      className="py-48 bg-[#0f0f0f] border-t border-subtle overflow-hidden"
     >
-      <div className="mb-24">
-        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-4">
-          Qualifications
-        </h2>
-      </div>
+      <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-32 px-6 md:px-12 max-w-7xl mx-auto">
+        Qualifications
+      </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
-        {certs.map((cert, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.05,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="flex items-center justify-between py-6 border-b border-white/5 group cursor-default"
-          >
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-[#f04823] uppercase tracking-widest">
-                {cert.issuer}
-              </span>
-              <h3 className="text-lg font-medium text-white group-hover:text-white/80 transition-colors">
-                {cert.name}
+      <div className="flex flex-col gap-12 w-full">
+        {certs.map((cert, i) => {
+          // Alternate movement directions
+          const direction = i % 2 === 0 ? 1 : -1;
+          const x = useTransform(
+            scrollYProgress,
+            [0, 1],
+            [`${direction * 20}%`, `${direction * -20}%`],
+          );
+
+          return (
+            <motion.div key={i} style={{ x }} className="whitespace-nowrap">
+              <h3 className="text-6xl md:text-9xl font-heading font-medium text-white/80 uppercase tracking-tighter hover:text-[#f04823] transition-colors duration-500 cursor-default px-6">
+                {cert} <span className="text-white/10 mx-8">•</span> {cert}
               </h3>
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <span className="text-xs font-bold text-white/40 uppercase tracking-widest">
-                {cert.date}
-              </span>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
