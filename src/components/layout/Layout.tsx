@@ -1,74 +1,50 @@
-import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import type { ReactNode } from 'react';
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
   const { scrollYProgress } = useScroll();
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-  const [currentChapter, setCurrentChapter] = useState("01 INTRO");
 
-  const chapters = [
-    { id: "intro", name: "01 INTRO" },
-    { id: "work", name: "02 WORK" },
-    { id: "about", name: "03 ABOUT" },
-    { id: "experience", name: "04 EXPERIENCE" },
-    { id: "stack", name: "05 STACK" },
-    { id: "education", name: "06 EDUCATION" },
-    { id: "publications", name: "07 PUBLICATIONS" },
-    { id: "contact", name: "08 CONTACT" },
-  ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Very simple chapter detection based on section scroll positions
-      const scrollPos = window.scrollY + window.innerHeight / 2;
-
-      for (let i = chapters.length - 1; i >= 0; i--) {
-        const element = document.getElementById(chapters[i].id);
-        if (element && scrollPos >= element.offsetTop) {
-          setCurrentChapter(chapters[i].name);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
+  // Thin line indicating scroll progress
+  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa] selection:bg-[#f04823] selection:text-white font-body overflow-x-hidden">
-      {/* Minimal chapter navigation */}
-      <motion.div
-        style={{ opacity: navOpacity }}
-        className="fixed top-8 left-6 md:left-12 z-50 mix-blend-difference text-white flex flex-col gap-2 pointer-events-none"
-      >
-        <div className="text-xs font-bold uppercase tracking-[0.2em]">
-          {currentChapter}
+    <div className="bg-[#0a0a0a] text-[#f4f4f0] selection:bg-[#bdf205] selection:text-black">
+      {/* Edge Navigation */}
+      <header className="fixed top-8 left-8 right-8 z-50 mix-blend-difference flex justify-between items-start pointer-events-none">
+        <div className="font-heading font-medium tracking-tight text-xl leading-none">
+          ARYAN
+          <br />
+          PANDEY
         </div>
-      </motion.div>
 
-      {/* Vertical Progress Indicator */}
-      <motion.div
-        style={{ opacity: navOpacity }}
-        className="fixed right-6 md:right-12 top-1/2 -translate-y-1/2 h-[20vh] w-px bg-white/10 z-50 pointer-events-none"
-      >
-        <motion.div
-          style={{ scaleY, transformOrigin: "top" }}
-          className="w-full h-full bg-[#f04823]"
-        ></motion.div>
-      </motion.div>
+        <nav className="flex flex-col items-end gap-2 text-xs font-bold tracking-[0.2em] pointer-events-auto">
+          <a href="#work" className="hover:text-[#bdf205] transition-colors">
+            WORK
+          </a>
+          <a href="#about" className="hover:text-[#bdf205] transition-colors">
+            ABOUT
+          </a>
+          <a
+            href="#experience"
+            className="hover:text-[#bdf205] transition-colors"
+          >
+            EXPERIENCE
+          </a>
+          <a href="#contact" className="hover:text-[#bdf205] transition-colors">
+            CONTACT
+          </a>
+        </nav>
+      </header>
 
-      {/* Main Content */}
+      {/* Subtle Vertical Progress Indicator */}
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 h-[30vh] w-[1px] bg-white/10 z-50 hidden md:block">
+        <motion.div style={{ height }} className="w-full bg-[#bdf205]" />
+      </div>
+
       <main>{children}</main>
     </div>
   );

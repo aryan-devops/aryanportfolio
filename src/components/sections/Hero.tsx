@@ -2,57 +2,67 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
+  const targetRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: targetRef,
     offset: ["start start", "end start"],
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
-  const yName = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const yRole = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
-  const bgOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const yHero = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={containerRef} id="intro" className="h-[150vh] relative">
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a]">
-        {/* Changing Background Layer */}
+    <section
+      ref={targetRef}
+      id="intro"
+      className="h-[150vh] relative bg-[#0a0a0a]"
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center p-8 md:p-16">
         <motion.div
-          style={{ opacity: bgOpacity }}
-          className="absolute inset-0 bg-[#0f0f0f] z-0"
-        ></motion.div>
-        <div className="absolute inset-0 grid-bg opacity-20 z-0"></div>
-
-        {/* Typography Composition */}
-        <motion.div
-          style={{ scale }}
-          className="relative z-10 flex flex-col items-center justify-center w-full px-4"
+          style={{ scale, y: yHero, opacity: opacityHero }}
+          className="flex flex-col justify-center h-full w-full relative origin-top"
         >
-          <motion.h1
-            style={{ y: yName }}
-            className="text-[12vw] md:text-[14vw] font-heading font-medium tracking-tighter text-white leading-[0.8] uppercase text-center mix-blend-difference"
-          >
-            Aryan
-            <br />
-            Pandey
-          </motion.h1>
-          <motion.h2
-            style={{ y: yRole }}
-            className="text-[4vw] md:text-[3vw] font-bold text-[#f04823] uppercase tracking-[0.3em] mt-8 text-center mix-blend-difference"
-          >
-            Full-Stack Developer
-          </motion.h2>
-        </motion.div>
+          <div className="flex flex-col text-[14vw] md:text-[11vw] font-heading font-bold leading-[0.8] tracking-tighter">
+            <div className="flex items-center gap-8">
+              <span>ARYAN</span>
+              <span className="text-xs md:text-sm font-body tracking-[0.2em] font-medium opacity-50 hidden md:block max-w-[200px] mt-4 leading-relaxed">
+                RAIPUR / INDIA
+                <br />
+                MCA @ AMITY
+                <br />
+                FULL-STACK DEVELOPMENT
+              </span>
+            </div>
+            <span className="pl-[10vw]">PANDEY</span>
+            <span className="text-outline">FULL-</span>
+            <span className="pl-[5vw] text-[#bdf205]">STACK</span>
+            <span className="pl-[20vw]">DEVELOPER</span>
+          </div>
 
-        {/* Metadata */}
-        <motion.div
-          style={{ opacity }}
-          className="absolute bottom-12 left-6 right-6 md:left-12 md:right-12 flex flex-col md:flex-row justify-between items-center gap-6 z-10 text-xs font-bold uppercase tracking-widest text-white/40"
-        >
-          <span>Raipur, India</span>
-          <span>MCA @ Amity University</span>
-          <span>Scroll to explore</span>
+          <div className="absolute bottom-8 right-8 text-right max-w-xs md:max-w-md hidden md:block">
+            <h3 className="text-lg md:text-2xl font-body font-medium leading-tight">
+              BUILDING DIGITAL PRODUCTS THAT ACTUALLY WORK.
+            </h3>
+            <div className="flex justify-end gap-6 mt-6 text-xs font-bold tracking-[0.2em] text-[#bdf205]">
+              <a
+                href="https://github.com/aryan-devops"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                GITHUB
+              </a>
+              <a
+                href="https://linkedin.com/in/aryanpandey"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                LINKEDIN
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

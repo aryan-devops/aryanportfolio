@@ -2,74 +2,60 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Experience() {
-  const containerRef = useRef<HTMLElement>(null);
+  const targetRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: targetRef,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const yResp1 = useTransform(scrollYProgress, [0.3, 0.5], [50, 0]);
+  const opacityResp1 = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
 
-  const experiences = [
-    {
-      role: "WEB DEVELOPER INTERN",
-      company: "EXBYTE TECHNOLOGY",
-      period: "MARCH 2025 — MAY 2025",
-      location: "BILASPUR",
-      points: [
-        "Developing scalable web solutions and optimizing backend performance.",
-        "Collaborating with teams to deliver responsive enterprise applications.",
-      ],
-    },
-  ];
+  const yResp2 = useTransform(scrollYProgress, [0.4, 0.6], [50, 0]);
+  const opacityResp2 = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
 
   return (
     <section
-      ref={containerRef}
+      ref={targetRef}
       id="experience"
-      className="min-h-screen py-32 px-6 md:px-12 flex flex-col justify-center relative border-t border-subtle"
+      className="py-48 px-8 max-w-7xl mx-auto border-t border-white/10"
     >
-      <motion.div style={{ y, opacity }} className="max-w-7xl mx-auto w-full">
-        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-24">
-          Experience
-        </h2>
+      <div className="flex flex-col gap-8">
+        <span className="text-8xl md:text-[12rem] font-heading font-bold text-white/5 leading-none -ml-4">
+          2025
+        </span>
 
-        <div className="flex flex-col gap-32">
-          {experiences.map((exp, i) => (
-            <div key={i} className="flex flex-col gap-12">
-              <div className="flex flex-col gap-4">
-                <span className="text-xl text-[#f04823] font-bold tracking-widest uppercase">
-                  {exp.period}
-                </span>
-                <h3 className="text-5xl md:text-7xl font-heading font-medium text-white uppercase tracking-tight leading-none">
-                  {exp.company}
-                </h3>
-                <div className="flex items-center gap-6 text-sm font-bold uppercase tracking-widest text-white/60 mt-4">
-                  <span>{exp.role}</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#f04823]"></span>
-                  <span>{exp.location}</span>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-[-4rem] md:mt-[-6rem] relative z-10">
+          <div className="flex flex-col gap-2">
+            <h3 className="text-4xl md:text-6xl font-heading font-bold uppercase tracking-tighter text-white">
+              Exbyte Technology
+            </h3>
+            <span className="text-[#bdf205] font-body font-bold tracking-[0.2em] uppercase text-sm mt-2">
+              Web Developer Intern
+            </span>
+            <span className="text-white/40 font-body font-medium tracking-widest uppercase text-xs mt-1">
+              Bilaspur • Mar — May 2025
+            </span>
+          </div>
 
-              <div className="flex flex-col gap-8 border-l-2 border-white/10 pl-8 ml-2">
-                {exp.points.map((point, j) => (
-                  <motion.p
-                    key={j}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: j * 0.2 }}
-                    className="text-xl md:text-2xl text-white/70 leading-relaxed max-w-3xl"
-                  >
-                    {point}
-                  </motion.p>
-                ))}
-              </div>
-            </div>
-          ))}
+          <div className="flex flex-col gap-12 font-body text-xl md:text-2xl font-medium leading-relaxed text-white/80">
+            <motion.div
+              style={{ y: yResp1, opacity: opacityResp1 }}
+              className="pl-6 border-l-2 border-white/20"
+            >
+              Developing scalable web solutions and optimizing backend
+              performance.
+            </motion.div>
+            <motion.div
+              style={{ y: yResp2, opacity: opacityResp2 }}
+              className="pl-6 border-l-2 border-[#bdf205]"
+            >
+              Collaborating with teams to deliver responsive enterprise
+              applications.
+            </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,166 +1,186 @@
 import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Projects() {
   const targetRef = useRef<HTMLElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start end", "end start"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
-
-  // Mobile devices or users who prefer reduced motion shouldn't get the extreme horizontal scroll
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const disableHorizontal = prefersReducedMotion || isMobile;
-
-  const projects = [
-    {
-      num: "01",
-      title: "ANNADATA",
-      type: "AI AGRICULTURAL ADVISOR",
-      image: "/projects/annadata.jpg",
-      desc: "Helping farmers with intelligent crop-related information and location-aware agricultural assistance.",
-      tech: ["React", "Node.js", "MongoDB", "Location API"],
-    },
-    {
-      num: "02",
-      title: "QUIZERR",
-      type: "Online Proctor-Based Quizzing System",
-      image: "/projects/quizerr.jpg",
-      desc: "Automated proctoring platform featuring focus detection, head tracking, and violation monitoring with over 100+ student users.",
-      tech: ["JavaScript", "Node.js", "Supabase", "WebRTC"],
-    },
-    {
-      num: "03",
-      title: "YESHA ENTERPRISES",
-      type: "BUSINESS PLATFORM",
-      image: "/projects/yesha.jpg",
-      desc: "Professional web presence developed for a commercial biofloc fish farming company. Engineered for high SEO performance.",
-      tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    },
-    {
-      num: "04",
-      title: "YESHA BILLING",
-      type: "SOFTWARE",
-      image: "/projects/yesha.jpg", // Reusing image if no specific billing image exists
-      desc: "Practical business billing and invoicing software developed for active day-to-day operations and workflow speed.",
-      tech: ["Electron", "React", "SQLite"],
-    },
-    {
-      num: "05",
-      title: "E-COMMERCE",
-      type: "PLATFORM",
-      image: "/projects/annadata.jpg", // Placeholder until they upload the real one
-      desc: "Full-featured e-commerce platform with product listing, category filtering, authentication, and cart management.",
-      tech: ["PHP", "MySQL", "JavaScript"],
-    },
-  ];
-
-  if (disableHorizontal) {
-    return (
-      <section id="work" className="py-32 px-6 bg-[#0f0f0f]">
-        <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-24">
-          Selected Work
-        </h2>
-        <div className="flex flex-col gap-32">
-          {projects.map((proj) => (
-            <div key={proj.num} className="flex flex-col gap-8">
-              <span className="text-6xl font-heading font-medium text-white/10">
-                {proj.num}
-              </span>
-              <div className="w-full aspect-video bg-[#141414] border border-subtle overflow-hidden">
-                <img
-                  src={proj.image}
-                  alt={proj.title}
-                  className="w-full h-full object-cover opacity-80"
-                />
-              </div>
-              <h3 className="text-4xl font-heading font-medium text-white uppercase">
-                {proj.title}
-              </h3>
-              <p className="text-[#f04823] text-sm font-bold tracking-widest uppercase">
-                {proj.type}
-              </p>
-              <p className="text-white/60 text-lg leading-relaxed">
-                {proj.desc}
-              </p>
-              <div className="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-widest text-white/40">
-                {proj.tech.map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
+  const titleY = useTransform(scrollYProgress, [0, 0.2], [200, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   return (
     <section
       ref={targetRef}
       id="work"
-      className="h-[500vh] bg-[#0f0f0f] relative"
+      className="bg-[#0a0a0a] relative pb-48 pt-24"
     >
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <motion.div
-          style={{ x }}
-          className="flex gap-32 px-[10vw] items-center h-full"
-        >
-          {/* Intro Slide */}
-          <div className="w-[80vw] md:w-[40vw] flex-shrink-0 flex flex-col gap-8">
-            <h2 className="text-[8vw] md:text-[6vw] font-heading font-medium leading-none text-white tracking-tight uppercase">
-              Selected
-              <br />
-              Work
-            </h2>
-            <p className="text-xl md:text-2xl text-white/40">05 PROJECTS</p>
+      {/* The Huge Transition Title */}
+      <motion.div
+        style={{ y: titleY, opacity: titleOpacity }}
+        className="min-h-screen flex items-center justify-center pointer-events-none sticky top-0 z-0"
+      >
+        <h2 className="text-[15vw] font-heading font-bold text-white/5 tracking-tighter leading-[0.8] text-center">
+          SELECTED
+          <br />
+          WORK
+        </h2>
+      </motion.div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-8 flex flex-col gap-[30vh] mt-[50vh]">
+        {/* 01 ANNADATA */}
+        <div className="flex flex-col gap-12 group">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/10 pb-8">
+            <div className="flex flex-col">
+              <span className="text-6xl md:text-8xl font-heading font-bold text-[#bdf205] leading-none">
+                01
+              </span>
+              <h3 className="text-4xl md:text-7xl font-heading font-bold mt-4 tracking-tighter uppercase">
+                Annadata
+              </h3>
+            </div>
+            <span className="text-xl md:text-3xl font-body font-medium text-white/40 uppercase tracking-tight max-w-sm text-right">
+              AI Agricultural Advisor
+            </span>
           </div>
 
-          {/* Projects */}
-          {projects.map((proj) => (
-            <div
-              key={proj.num}
-              className="w-[85vw] md:w-[70vw] flex-shrink-0 flex flex-col md:flex-row gap-12 md:gap-24 items-center"
-            >
-              <div className="w-full md:w-3/5 aspect-[4/3] md:aspect-[16/9] bg-[#141414] border border-subtle overflow-hidden relative group">
-                <img
-                  src={proj.image}
-                  alt={proj.title}
-                  className="w-full h-full object-cover object-center opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-[0.16,1,0.3,1]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                <span className="absolute bottom-6 left-6 text-[150px] font-heading font-medium leading-none text-white/20 select-none pointer-events-none mix-blend-overlay">
-                  {proj.num}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div className="col-span-1 md:col-span-8 overflow-hidden bg-white/5 aspect-[4/3] w-full">
+              <img
+                src="/projects/annadata.jpg"
+                alt="Annadata"
+                className="w-full h-full object-cover grayscale opacity-80 mix-blend-luminosity hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+              />
+            </div>
+            <div className="col-span-1 md:col-span-4 flex flex-col gap-8 text-sm font-medium tracking-wide">
+              <div>
+                <span className="text-[#bdf205] uppercase tracking-[0.2em] text-xs block mb-2">
+                  Problem
                 </span>
+                <p className="text-white/70">
+                  Farmers lack intelligent, location-aware crop assistance in
+                  real-time.
+                </p>
               </div>
-
-              <div className="w-full md:w-2/5 flex flex-col gap-6">
-                <h3 className="text-4xl md:text-6xl font-heading font-medium text-white uppercase leading-none tracking-tight">
-                  {proj.title}
-                </h3>
-                <p className="text-sm md:text-base font-bold text-[#f04823] tracking-widest uppercase">
-                  {proj.type}
+              <div>
+                <span className="text-[#bdf205] uppercase tracking-[0.2em] text-xs block mb-2">
+                  Solution
+                </span>
+                <p className="text-white/70">
+                  A comprehensive AI advisor providing predictive data and
+                  actionable insights.
                 </p>
-                <p className="text-lg md:text-2xl text-white/60 leading-relaxed max-w-lg mt-4">
-                  {proj.desc}
+              </div>
+              <div>
+                <span className="text-[#bdf205] uppercase tracking-[0.2em] text-xs block mb-2">
+                  Technology
+                </span>
+                <p className="text-white/70">
+                  React, Node.js, MongoDB, Location APIs.
                 </p>
-                <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs md:text-sm font-bold uppercase tracking-widest text-white/40 mt-8">
-                  {proj.tech.map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
               </div>
             </div>
-          ))}
-        </motion.div>
+          </div>
+        </div>
+
+        {/* 02 QUIZERR */}
+        <div className="flex flex-col gap-12 group">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/10 pb-8">
+            <div className="flex flex-col">
+              <span className="text-6xl md:text-8xl font-heading font-bold text-[#bdf205] leading-none">
+                02
+              </span>
+              <h3 className="text-4xl md:text-7xl font-heading font-bold mt-4 tracking-tighter uppercase">
+                Quizerr
+              </h3>
+            </div>
+            <span className="text-xl md:text-3xl font-body font-medium text-white/40 uppercase tracking-tight max-w-sm text-right">
+              Online Proctor-Based Quizzing
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div className="col-span-1 md:col-span-4 order-2 md:order-1 flex flex-col gap-8 text-xl font-heading tracking-tight text-white/80">
+              <span className="border-l-2 border-[#bdf205] pl-4">
+                JavaScript
+              </span>
+              <span className="border-l-2 border-[#bdf205] pl-4">Node.js</span>
+              <span className="border-l-2 border-[#bdf205] pl-4">Supabase</span>
+              <span className="border-l-2 border-[#bdf205] pl-4">
+                Automated Proctoring
+              </span>
+              <span className="border-l-2 border-[#bdf205] pl-4 text-white">
+                100+ Student Users
+              </span>
+            </div>
+            <div className="col-span-1 md:col-span-8 order-1 md:order-2 overflow-hidden bg-white/5 aspect-video w-full">
+              <img
+                src="/projects/quizerr.jpg"
+                alt="Quizerr"
+                className="w-full h-full object-cover grayscale opacity-80 mix-blend-luminosity hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 03 YESHA ENTERPRISES */}
+        <div className="flex flex-col gap-12 group">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/10 pb-8">
+            <div className="flex flex-col">
+              <span className="text-6xl md:text-8xl font-heading font-bold text-white/20 leading-none">
+                03
+              </span>
+              <h3 className="text-4xl md:text-7xl font-heading font-bold mt-4 tracking-tighter uppercase">
+                Yesha Enterprises
+              </h3>
+            </div>
+            <span className="text-xl md:text-3xl font-body font-medium text-white/40 uppercase tracking-tight max-w-sm text-right">
+              Commercial Platform
+            </span>
+          </div>
+          <div className="w-full overflow-hidden bg-white/5 aspect-[16/9]">
+            <img
+              src="/projects/yesha.jpg"
+              alt="Yesha"
+              className="w-full h-full object-cover opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-1000"
+            />
+          </div>
+        </div>
+
+        {/* 04 YESHA BILLING & 05 E-COMMERCE */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="flex flex-col gap-8">
+            <h4 className="text-3xl md:text-5xl font-heading font-bold tracking-tighter uppercase">
+              04 Yesha Billing
+            </h4>
+            <div className="w-full bg-white/5 aspect-[4/3] border border-white/10 flex items-center justify-center p-8">
+              <div className="w-full h-full border border-[#bdf205]/20 flex flex-col text-[#bdf205] font-mono text-xs p-4 overflow-hidden relative">
+                <div className="border-b border-[#bdf205]/20 pb-2 mb-4">
+                  SYSTEM.INIT()
+                </div>
+                <div>&gt; Loading interface...</div>
+                <div>&gt; Establishing SQLite connection... OK</div>
+                <div>&gt; Rendering invoice dashboard...</div>
+                <div className="mt-auto animate-pulse">_</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-8">
+            <h4 className="text-3xl md:text-5xl font-heading font-bold tracking-tighter uppercase">
+              05 E-Commerce
+            </h4>
+            <div className="w-full bg-white/5 aspect-[4/3] border border-white/10 overflow-hidden">
+              <img
+                src="/projects/annadata.jpg"
+                alt="E-Commerce"
+                className="w-full h-full object-cover grayscale opacity-50"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
