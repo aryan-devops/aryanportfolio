@@ -1,115 +1,150 @@
-import { useState, useEffect } from 'react'
-import { Github, Linkedin, Mail } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from "react";
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface LayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    // Remove dark mode as Ethereal Glass is inherently dark
-    useEffect(() => {
-        document.documentElement.classList.add('dark')
-    }, [])
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const navLinks = [
-        { name: 'About', href: '#about' },
-        { name: 'Projects', href: '#projects' },
-        { name: 'Experience', href: '#experience' },
-        { name: 'Contact', href: '#contact' },
-    ]
+  const navLinks = [
+    { name: "Work", href: "#work" },
+    { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
+    { name: "Contact", href: "#contact" },
+  ];
 
-    return (
-        <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-white/20">
-            {/* The "Fluid Island" Nav */}
-            <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-                <nav className="pointer-events-auto bg-[#111]/80 backdrop-blur-2xl border border-white/5 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-                    <a href="#" className="text-xl font-bold font-heading tracking-tight text-white hover:text-white/80 transition-colors">
-                        Aryan<span className="text-white/40">.dev</span>
-                    </a>
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa] selection:bg-white selection:text-black font-body">
+      {/* Header */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${scrolled ? "bg-[#0a0a0a]/90 backdrop-blur-md border-white/5 py-4" : "bg-transparent border-transparent py-6"}`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+          <a
+            href="#"
+            className="text-xl font-heading font-medium tracking-tight uppercase z-50"
+          >
+            Aryan Pandey
+          </a>
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-8 ml-auto">
-                        <ul className="flex gap-6 text-sm font-medium text-white/60">
-                            {navLinks.map((link) => (
-                                <li key={link.name}>
-                                    <a href={link.href} className="hover:text-white transition-colors">
-                                        {link.name}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            <ul className="flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-white/60">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="w-px h-4 bg-white/20"></div>
+            <div className="flex items-center gap-4 text-white/60">
+              <a
+                href="https://github.com/aryan-devops"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href="https://linkedin.com/in/aryanpandey"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Linkedin size={18} />
+              </a>
+            </div>
+          </nav>
 
-                    {/* Mobile Menu Toggle */}
-                    <div className="flex md:hidden items-center ml-auto">
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 text-white/80 hover:text-white transition-colors relative w-10 h-10 flex items-center justify-center"
-                        >
-                            <span className={`absolute block w-5 h-[1.5px] bg-current transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${mobileMenuOpen ? 'rotate-45' : '-translate-y-1.5'}`} />
-                            <span className={`absolute block w-5 h-[1.5px] bg-current transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${mobileMenuOpen ? '-rotate-45' : 'translate-y-1.5'}`} />
-                        </button>
-                    </div>
-                </nav>
-            </header>
-
-            {/* Mobile Navigation Expanded Overlay */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40 bg-[#050505]/95 backdrop-blur-3xl flex flex-col justify-center px-8 pt-20 pb-8"
-                    >
-                        <ul className="flex flex-col gap-6 text-3xl font-heading font-medium tracking-tight">
-                            {navLinks.map((link, i) => (
-                                <motion.li
-                                    key={link.name}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 20 }}
-                                    transition={{ delay: i * 0.1, duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
-                                >
-                                    <a
-                                        href={link.href}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block hover:text-white/60 transition-colors"
-                                    >
-                                        {link.name}
-                                    </a>
-                                </motion.li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <main className="flex-1 pt-32 pb-24 px-4 md:px-8 max-w-[1400px] mx-auto w-full">
-                {children}
-            </main>
-
-            <footer className="py-12 border-t border-white/5 mt-auto">
-                <div className="max-w-[1400px] mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-white/40 text-sm font-medium">
-                        © {new Date().getFullYear()} Aryan Pandey. Ethereal build.
-                    </p>
-                    <div className="flex gap-4">
-                        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all">
-                            <Linkedin size={18} strokeWidth={1.5} />
-                        </a>
-                        <a href="https://github.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all">
-                            <Github size={18} strokeWidth={1.5} />
-                        </a>
-                        <a href="mailto:aryan000pandey@gmail.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all">
-                            <Mail size={18} strokeWidth={1.5} />
-                        </a>
-                    </div>
-                </div>
-            </footer>
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden z-50 text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
-    )
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col justify-center px-6"
+          >
+            <ul className="flex flex-col gap-8 text-4xl font-heading font-medium uppercase tracking-tight text-white/40">
+              {navLinks.map((link) => (
+                <motion.li
+                  key={link.name}
+                  whileHover={{ x: 10, color: "#fff" }}
+                >
+                  <a href={link.href} onClick={() => setMobileMenuOpen(false)}>
+                    {link.name}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="flex items-center gap-6 mt-16 text-white/60">
+              <a
+                href="https://github.com/aryan-devops"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Github size={24} />
+              </a>
+              <a
+                href="https://linkedin.com/in/aryanpandey"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Linkedin size={24} />
+              </a>
+              <a
+                href="mailto:aryan000pandey@gmail.com"
+                className="hover:text-white transition-colors"
+              >
+                <Mail size={24} />
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Content */}
+      <main>{children}</main>
+
+      {/* Footer */}
+      <footer className="border-t border-subtle py-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-white/40 uppercase tracking-widest">
+          <p>© {new Date().getFullYear()} Aryan Pandey.</p>
+          <p>Designed for Scale.</p>
+        </div>
+      </footer>
+    </div>
+  );
 }

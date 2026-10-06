@@ -1,69 +1,80 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
 export default function About() {
-    return (
-        <section id="about" className="py-32 relative border-t border-white/5">
-            <div className="flex flex-col md:flex-row gap-16 md:gap-24">
-                
-                {/* Left Side - Typography (Editorial Split) */}
-                <div className="w-full md:w-5/12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
-                        className="sticky top-32"
-                    >
-                        <div className="inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
-                            <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white/60">Engineering Approach</span>
-                        </div>
-                        <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight text-white mb-6 leading-tight">
-                            Building with <br /> Intent & Precision
-                        </h2>
-                    </motion.div>
-                </div>
+  return (
+    <section
+      id="about"
+      className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-subtle"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
+        {/* Left Side - Heading */}
+        <div className="md:col-span-5 flex flex-col">
+          <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-8">
+            About
+          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h3 className="text-3xl md:text-5xl font-heading font-medium text-white tracking-tight leading-tight max-w-sm">
+              Full-stack developer focused on building useful software across
+              frontend, backend, and product experiences.
+            </h3>
+          </motion.div>
+        </div>
 
-                {/* Right Side - Content */}
-                <div className="w-full md:w-7/12 flex flex-col gap-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-                        className="text-lg md:text-xl text-white/60 leading-relaxed font-light space-y-6"
-                    >
-                        <p>
-                            I'm a Full-Stack Developer focused on creating digital experiences that are robust under the hood and beautiful on the surface. 
-                        </p>
-                        <p>
-                            I approach engineering as a craft. Whether I'm designing a real-time multiplayer backend or composing a fluid frontend interface, my goal is to deliver software that feels intentional, performs effortlessly, and solves actual problems.
-                        </p>
-                        <p>
-                            Currently, I am deeply exploring AI integrations, modern data architectures, and high-performance React patterns. I thrive in environments that challenge my problem-solving abilities and require a comprehensive understanding of the entire stack.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-                        className="outer-shell mt-4"
-                    >
-                        <div className="inner-core grid grid-cols-2 gap-8">
-                            <div>
-                                <h4 className="text-white/40 text-sm uppercase tracking-widest font-semibold mb-2">Focus</h4>
-                                <p className="text-white">Full-Stack Development</p>
-                            </div>
-                            <div>
-                                <h4 className="text-white/40 text-sm uppercase tracking-widest font-semibold mb-2">Location</h4>
-                                <p className="text-white">Raipur, India</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-                
+        {/* Right Side - Metadata / Timeline */}
+        <div className="md:col-span-7 flex flex-col gap-16 pt-2 md:pt-12">
+          {/* Education Timeline */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-8"
+          >
+            <div className="flex flex-col gap-2 pb-6 border-b border-subtle">
+              <span className="text-xs font-bold text-[#f04823] uppercase tracking-widest">
+                MCA
+              </span>
+              <span className="text-xl text-white">
+                Amity University Raipur
+              </span>
+              <span className="text-sm text-white/40 mt-1">2025 – 2027</span>
             </div>
-        </section>
-    )
+            <div className="flex flex-col gap-2 pb-6 border-b border-subtle">
+              <span className="text-xs font-bold text-[#f04823] uppercase tracking-widest">
+                BCA
+              </span>
+              <span className="text-xl text-white">Disha College</span>
+              <span className="text-sm text-white/40 mt-1">2021 – 2024</span>
+            </div>
+          </motion.div>
+
+          {/* Focus Areas */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-2 gap-8"
+          >
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">
+                Focus
+              </span>
+              <ul className="flex flex-col gap-3 text-white/80">
+                <li>Full-Stack Development</li>
+                <li>Web Applications</li>
+                <li>Backend Systems</li>
+                <li>AI/ML Exploration</li>
+              </ul>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }
