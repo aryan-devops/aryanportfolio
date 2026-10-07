@@ -1,54 +1,54 @@
 import type { ReactNode } from 'react';
-import { motion, useScroll, useTransform } from "framer-motion";
-import CustomCursor from './CustomCursor';
+import { Github, Linkedin, Mail, Code } from 'lucide-react';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { scrollYProgress } = useScroll();
-
-  // Thin line indicating scroll progress
-  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
   return (
-    <div className="bg-[#070707] text-[#ecece6] selection:bg-[#bdf205] selection:text-black">
-      <CustomCursor />
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
       
-      {/* Edge Navigation */}
-      <header className="fixed top-8 left-8 right-8 z-50 mix-blend-difference flex justify-between items-start pointer-events-none">
-        <div className="font-heading font-medium tracking-tight text-xl leading-none">
-          ARYAN
-          <br />
-          PANDEY
-        </div>
+      {/* Minimal Header */}
+      <header className="sticky top-0 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border)]">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="#" className="flex items-center gap-2 font-semibold tracking-tight text-lg hover:opacity-80 transition-opacity">
+            <Code className="w-5 h-5 text-[var(--accent)]" />
+            Aryan Pandey
+          </a>
 
-        <nav className="flex flex-col items-end gap-2 text-xs font-bold tracking-[0.2em] pointer-events-auto">
-          <a href="#work" className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL">
-            WORK
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--text-secondary)]">
+            <a href="#work" className="hover:text-[var(--accent)] transition-colors">Work</a>
+            <a href="#experience" className="hover:text-[var(--accent)] transition-colors">Experience</a>
+            <a href="#about" className="hover:text-[var(--accent)] transition-colors">About</a>
+          </nav>
+          
+          <a href="#contact" className="btn-primary hidden md:inline-flex py-2 px-4">
+            <Mail className="w-4 h-4" />
+            Contact
           </a>
-          <a href="#about" className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL">
-            ABOUT
-          </a>
-          <a
-            href="#experience"
-            className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL"
-          >
-            EXPERIENCE
-          </a>
-          <a href="#contact" className="hover:text-[#bdf205] transition-colors" data-cursor="SAY HI">
-            CONTACT
-          </a>
-        </nav>
+        </div>
       </header>
 
-      {/* Subtle Vertical Progress Indicator */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 h-[30vh] w-[1px] bg-white/10 z-50 hidden md:block">
-        <motion.div style={{ height }} className="w-full bg-[#bdf205]" />
-      </div>
-
       <main>{children}</main>
+
+      {/* Minimal Footer */}
+      <footer className="border-t border-[var(--border)] bg-[var(--bg-secondary)] py-12">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-sm text-[var(--text-secondary)]">
+            © {new Date().getFullYear()} Aryan Pandey. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/aryan-devops" target="_blank" rel="noreferrer" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="https://linkedin.com/in/aryanpandey" target="_blank" rel="noreferrer" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
