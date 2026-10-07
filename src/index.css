@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,81 +6,125 @@
 
 @layer base {
   :root {
-    --bg-primary: #050505;
-    --bg-secondary: #0a0a0a;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --accent: #3b82f6; /* Blue accent */
-    --accent-hover: #60a5fa;
-    --border: #27272a;
+    --bg-canvas: #FBFBFA;
+    --bg-surface: #FFFFFF;
+    --text-primary: #111111;
+    --text-secondary: #787774;
+    --border-subtle: #EAEAEA;
+    --accent-red-bg: #FDEBEC;
+    --accent-red-txt: #9F2F2D;
+    --accent-blue-bg: #E1F3FE;
+    --accent-blue-txt: #1F6C9F;
+    --accent-green-bg: #EDF3EC;
+    --accent-green-txt: #346538;
   }
 
   body {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-canvas);
     color: var(--text-primary);
-    font-family: "Space Grotesk", sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
-    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
     color: var(--text-primary);
-    line-height: 1.1;
     margin: 0;
+  }
+
+  .font-serif-editorial {
+    font-family: 'Newsreader', serif;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
 @layer utilities {
   .section-container {
-    max-width: 72rem;
+    max-width: 64rem;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
+  
   @media (min-width: 768px) {
     .section-container {
-      padding-top: 10rem;
-      padding-bottom: 10rem;
+      padding-top: 8rem;
+      padding-bottom: 8rem;
     }
   }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--accent);
-    color: white;
+    padding: 0.5rem 1rem;
+    background-color: var(--text-primary);
+    color: var(--bg-surface);
     font-size: 0.875rem;
-    font-weight: 600;
-    border-radius: 9999px; /* Pill shape */
-    transition: all 0.3s ease;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
   }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
   .btn-primary:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
+    background-color: #333333;
   }
+
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: transparent;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-surface);
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-subtle);
     font-size: 0.875rem;
-    font-weight: 600;
-    border-radius: 9999px;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
   }
+
+  .btn-secondary:active {
+    transform: scale(0.98);
+  }
+
   .btn-secondary:hover {
-    background-color: var(--bg-secondary);
-    border-color: var(--text-secondary);
+    background-color: #F7F6F3;
+  }
+
+  .card-minimal {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-minimal:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  
+  .tag-pastel-blue {
+    background-color: var(--accent-blue-bg);
+    color: var(--accent-blue-txt);
+  }
+  
+  .tag-pastel-green {
+    background-color: var(--accent-green-bg);
+    color: var(--accent-green-txt);
   }
 }
 
@@ -89,15 +133,12 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: #D4D4D4;
   border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
 }
