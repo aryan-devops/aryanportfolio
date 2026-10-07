@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { motion, useScroll, useTransform } from "framer-motion";
+import CustomCursor from './CustomCursor';
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,7 +13,9 @@ export default function Layout({ children }: LayoutProps) {
   const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="bg-[#0a0a0a] text-[#f4f4f0] selection:bg-[#bdf205] selection:text-black">
+    <div className="bg-[#070707] text-[#ecece6] selection:bg-[#bdf205] selection:text-black">
+      <CustomCursor />
+      
       {/* Edge Navigation */}
       <header className="fixed top-8 left-8 right-8 z-50 mix-blend-difference flex justify-between items-start pointer-events-none">
         <div className="font-heading font-medium tracking-tight text-xl leading-none">
@@ -22,19 +25,19 @@ export default function Layout({ children }: LayoutProps) {
         </div>
 
         <nav className="flex flex-col items-end gap-2 text-xs font-bold tracking-[0.2em] pointer-events-auto">
-          <a href="#work" className="hover:text-[#bdf205] transition-colors">
+          <a href="#work" className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL">
             WORK
           </a>
-          <a href="#about" className="hover:text-[#bdf205] transition-colors">
+          <a href="#about" className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL">
             ABOUT
           </a>
           <a
             href="#experience"
-            className="hover:text-[#bdf205] transition-colors"
+            className="hover:text-[#bdf205] transition-colors" data-cursor="SCROLL"
           >
             EXPERIENCE
           </a>
-          <a href="#contact" className="hover:text-[#bdf205] transition-colors">
+          <a href="#contact" className="hover:text-[#bdf205] transition-colors" data-cursor="SAY HI">
             CONTACT
           </a>
         </nav>
