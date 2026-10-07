@@ -1,26 +1,15 @@
+import { motion } from "framer-motion";
+import { Cpu } from "lucide-react";
+
 export default function TechStack() {
   const stack = [
     {
       category: "FRONTEND",
-      technologies: [
-        "React",
-        "JavaScript",
-        "HTML5",
-        "CSS3",
-        "Responsive Web Design",
-        "API Integration",
-      ],
+      technologies: ["React", "JavaScript", "HTML5", "CSS3", "API Integration"],
     },
     {
       category: "BACKEND",
-      technologies: [
-        "Node.js",
-        "Express.js",
-        "PHP",
-        "REST APIs",
-        "Java",
-        "C++",
-      ],
+      technologies: ["Node.js", "Express.js", "PHP", "REST APIs", "Java", "C++"],
     },
     {
       category: "DATABASE",
@@ -28,32 +17,40 @@ export default function TechStack() {
     },
     {
       category: "DEVOPS",
-      technologies: ["Docker", "AWS", "CI/CD", "Vercel", "Netlify", "Git"],
+      technologies: ["Docker", "AWS", "CI/CD", "Vercel", "Git"],
     },
     {
-      category: "AI-ASSISTED DEVELOPMENT",
-      technologies: ["Antigravity", "Claude Code", "Codex", "Emergent AI"],
+      category: "AI",
+      technologies: ["Antigravity", "Claude Code", "Codex"],
     },
   ];
 
   return (
-    <section id="stack" className="py-48 px-8 bg-[#bdf205] text-[#0a0a0a]">
-      <div className="max-w-7xl mx-auto flex flex-col gap-32">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      id="stack"
+      className="bento-card col-span-4 row-span-1"
+    >
+      <div className="flex justify-between items-start mb-6">
+        <h3 className="text-xl text-dim font-medium uppercase tracking-widest">Tech Stack</h3>
+        <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+          <Cpu className="w-5 h-5 text-green-400" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {stack.map((group) => (
-          <div
-            key={group.category}
-            className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 border-t border-black/10 pt-8"
-          >
-            <div className="col-span-1 md:col-span-4">
-              <h4 className="text-2xl md:text-4xl font-heading font-bold uppercase tracking-tighter">
-                {group.category}
-              </h4>
-            </div>
-            <div className="col-span-1 md:col-span-8 flex flex-wrap gap-x-8 gap-y-4 font-body text-lg md:text-2xl font-medium tracking-tight">
+          <div key={group.category} className="flex flex-col gap-3">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-white">
+              {group.category}
+            </h4>
+            <div className="flex flex-wrap gap-2">
               {group.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="hover:text-black/50 transition-colors cursor-default"
+                  className="text-gray-400 text-sm bg-white/5 border border-white/10 px-2 py-1 rounded"
                 >
                   {tech}
                 </span>
@@ -62,6 +59,6 @@ export default function TechStack() {
           </div>
         ))}
       </div>
-    </section>
+    </motion.div>
   );
 }

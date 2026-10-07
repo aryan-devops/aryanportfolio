@@ -1,13 +1,7 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
+import { Award } from "lucide-react";
 
 export default function Certifications() {
-  const targetRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"],
-  });
-
   const certs = [
     "Git Version Control",
     "Core PHP and Android",
@@ -15,38 +9,34 @@ export default function Certifications() {
     "Facial Recognition with Python",
     "HTML5 / CSS3 / JavaScript",
     "RESTful API Best Practices",
-    "Interpretable Machine Learning Applications",
+    "Interpretable Machine Learning",
   ];
 
   return (
-    <section
-      ref={targetRef}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.6 }}
       id="certifications"
-      className="py-48 bg-[#0f0f0f] border-t border-subtle overflow-hidden"
+      className="bento-card col-span-4 md:col-span-2 row-span-1"
     >
-      <h2 className="text-sm font-bold text-white/40 uppercase tracking-[0.2em] mb-32 px-6 md:px-12 max-w-7xl mx-auto">
-        Qualifications
-      </h2>
-
-      <div className="flex flex-col gap-12 w-full">
-        {certs.map((cert, i) => {
-          // Alternate movement directions
-          const direction = i % 2 === 0 ? 1 : -1;
-          const x = useTransform(
-            scrollYProgress,
-            [0, 1],
-            [`${direction * 20}%`, `${direction * -20}%`],
-          );
-
-          return (
-            <motion.div key={i} style={{ x }} className="whitespace-nowrap">
-              <h3 className="text-6xl md:text-9xl font-heading font-medium text-white/80 uppercase tracking-tighter hover:text-[#f04823] transition-colors duration-500 cursor-default px-6">
-                {cert} <span className="text-white/10 mx-8">•</span> {cert}
-              </h3>
-            </motion.div>
-          );
-        })}
+      <div className="flex justify-between items-start mb-6">
+        <h3 className="text-xl text-dim font-medium uppercase tracking-widest">Certifications</h3>
+        <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+          <Award className="w-5 h-5 text-orange-400" />
+        </div>
       </div>
-    </section>
+
+      <div className="flex flex-wrap gap-3">
+        {certs.map((cert, i) => (
+          <span 
+            key={i} 
+            className="text-sm px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-gray-300 hover:text-white hover:border-white/30 transition-colors cursor-default"
+          >
+            {cert}
+          </span>
+        ))}
+      </div>
+    </motion.div>
   );
 }

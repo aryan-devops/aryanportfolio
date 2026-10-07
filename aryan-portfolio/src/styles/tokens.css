@@ -1,0 +1,41 @@
+/* tokens.css */
+:root {
+  /* Light theme default */
+  --bg: #EDEFF4;
+  --surface: #F8F9FC;
+  --ink: #0E1A2B;
+  --muted: #53627C;
+  --line: #CDD4E2;
+  --accent: #2B4BFF;
+  --accent-ink: #FFFFFF;
+  --ok: #17895A;
+}
+
+[data-theme="dark"] {
+  --bg: #0A1020;
+  --surface: #111A2E;
+  --ink: #E8EDF8;
+  --muted: #98A6C4;
+  --line: #24304A;
+  --accent: #8AA2FF;
+  --accent-ink: #0A1020;
+  --ok: #4CD694;
+}
+
+/* Typography scale */
+:root {
+  --font-display: "Bricolage Grotesque", -apple-system, sans-serif;
+  --font-body: "Instrument Sans", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --text-h1: clamp(50px, 9vw, 112px);
+  --text-h3: clamp(24px, 3vw, 34px);
+  --text-body: 16px;
+  --text-label: 12px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-label: 13px;
+  }
+}

@@ -12,15 +12,19 @@ import Contact from "./components/sections/Contact";
 function App() {
   return (
     <Layout>
-      <Hero />
-      <Projects />
-      <About />
-      <Experience />
-      <TechStack />
-      <Education />
-      <Publications />
-      <Certifications />
-      <Contact />
+      <div className="bento-container pt-32">
+        <div className="bento-grid">
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <TechStack />
+          <Education />
+          <Publications />
+          <Certifications />
+          <Contact />
+        </div>
+      </div>
     </Layout>
   );
 }
