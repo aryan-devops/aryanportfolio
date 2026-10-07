@@ -1,53 +1,66 @@
-import type { ReactNode } from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-interface LayoutProps {
-  children: ReactNode;
-}
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] font-sans">
-      
-      {/* Minimal Header */}
-      <header className="sticky top-0 z-50 bg-[var(--bg-canvas)]/80 backdrop-blur-sm border-b border-[var(--border-subtle)]">
-        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 font-serif-editorial font-medium tracking-tight text-xl hover:opacity-70 transition-opacity">
-            Aryan Pandey.
-          </a>
+    <div className="min-h-screen relative selection:bg-white selection:text-black">
+      <div className="ambient-glow" />
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--text-secondary)]">
-            <a href="#work" className="hover:text-[var(--text-primary)] transition-colors">Work</a>
-            <a href="#experience" className="hover:text-[var(--text-primary)] transition-colors">Experience</a>
-            <a href="#about" className="hover:text-[var(--text-primary)] transition-colors">About</a>
-          </nav>
-          
-          <div className="flex items-center gap-4">
-            <a href="https://github.com/aryan-devops" target="_blank" rel="noreferrer" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-              <Github className="w-4 h-4" />
-            </a>
-            <a href="https://linkedin.com/in/aryanpandey" target="_blank" rel="noreferrer" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-              <Linkedin className="w-4 h-4" />
-            </a>
+      {/* Floating Island Nav */}
+      <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 mix-blend-difference pointer-events-none w-full max-w-7xl px-4 md:px-8">
+        <div className="flex justify-between items-center pointer-events-auto">
+          <div className="text-xl font-bold font-['Clash_Display'] uppercase tracking-widest cursor-pointer group">
+            <span className="opacity-50 group-hover:opacity-100 transition-opacity duration-500">A</span>.P
           </div>
+          
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="w-12 h-12 rounded-full glass-panel flex items-center justify-center relative overflow-hidden group hover:scale-[0.98] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+          >
+            <div className="w-5 h-[1px] bg-white absolute transition-all duration-500" style={{ transform: menuOpen ? 'rotate(45deg)' : 'translateY(-3px)' }} />
+            <div className="w-5 h-[1px] bg-white absolute transition-all duration-500" style={{ transform: menuOpen ? 'rotate(-45deg)' : 'translateY(3px)' }} />
+          </button>
         </div>
       </header>
 
-      <main>{children}</main>
+      {/* Fullscreen Menu Modal */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: [0.32,0.72,0,1] }}
+            className="fixed inset-0 z-40 bg-[#030303]/90 backdrop-blur-2xl flex flex-col items-center justify-center"
+          >
+            <nav className="flex flex-col items-center gap-8 text-5xl md:text-7xl font-['Clash_Display'] font-bold uppercase">
+              {['Work', 'Experience', 'About', 'Contact'].map((item, i) => (
+                <div key={item} className="overflow-hidden">
+                  <motion.a 
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => setMenuOpen(false)}
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-100%" }}
+                    transition={{ delay: i * 0.1, duration: 0.8, ease: [0.32,0.72,0,1] }}
+                    className="block hover:text-stroke transition-all duration-500 cursor-pointer"
+                  >
+                    {item}
+                  </motion.a>
+                </div>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Minimal Footer */}
-      <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] py-12">
-        <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-sm text-[var(--text-secondary)] font-mono-code">
-            © {new Date().getFullYear()} Aryan Pandey
-          </p>
-          <a href="mailto:contact@example.com" className="btn-secondary">
-            <Mail className="w-4 h-4" />
-            contact@example.com
-          </a>
-        </div>
+      <main className="relative z-10">{children}</main>
+
+      <footer className="py-24 px-4 md:px-8 border-t border-white/5 text-center text-sm text-white/40 uppercase tracking-widest font-medium">
+        © {new Date().getFullYear()} Aryan Pandey. All Rights Reserved.
       </footer>
-
     </div>
   );
 }

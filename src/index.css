@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,125 +7,56 @@
 
 @layer base {
   :root {
-    --bg-canvas: #FBFBFA;
-    --bg-surface: #FFFFFF;
-    --text-primary: #111111;
-    --text-secondary: #787774;
-    --border-subtle: #EAEAEA;
-    --accent-red-bg: #FDEBEC;
-    --accent-red-txt: #9F2F2D;
-    --accent-blue-bg: #E1F3FE;
-    --accent-blue-txt: #1F6C9F;
-    --accent-green-bg: #EDF3EC;
-    --accent-green-txt: #346538;
+    --bg-void: #030303;
+    --text-core: #F5F5F5;
+    --text-dim: #888888;
+    --accent: #FFFFFF;
+    --bezel-outer: rgba(255,255,255,0.03);
+    --bezel-inner: rgba(255,255,255,0.02);
+    --border-hairline: rgba(255,255,255,0.08);
   }
 
   body {
-    background-color: var(--bg-canvas);
-    color: var(--text-primary);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-void);
+    color: var(--text-core);
+    font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.6;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: var(--text-primary);
-    margin: 0;
-  }
-
-  .font-serif-editorial {
-    font-family: 'Newsreader', serif;
+    font-family: 'Clash Display', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 0.9;
     letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-
-  .font-mono-code {
-    font-family: 'JetBrains Mono', monospace;
   }
 }
 
 @layer utilities {
-  .section-container {
-    max-width: 64rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+  .ambient-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
   }
   
-  @media (min-width: 768px) {
-    .section-container {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
-    }
+  .glass-panel {
+    background: var(--bezel-inner);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-hairline);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
   }
 
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: var(--text-primary);
-    color: var(--bg-surface);
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
-
-  .btn-primary:hover {
-    background-color: #333333;
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: var(--bg-surface);
-    color: var(--text-primary);
-    border: 1px solid var(--border-subtle);
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .btn-secondary:active {
-    transform: scale(0.98);
-  }
-
-  .btn-secondary:hover {
-    background-color: #F7F6F3;
-  }
-
-  .card-minimal {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-  }
-
-  .card-minimal:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-  
-  .tag-pastel-blue {
-    background-color: var(--accent-blue-bg);
-    color: var(--accent-blue-txt);
-  }
-  
-  .tag-pastel-green {
-    background-color: var(--accent-green-bg);
-    color: var(--accent-green-txt);
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+    color: transparent;
   }
 }
 
@@ -133,12 +65,5 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-canvas);
-}
-::-webkit-scrollbar-thumb {
-  background: #D4D4D4;
-  border-radius: 4px;
+  display: none;
 }
