@@ -7,9 +7,10 @@ import { useTheme } from '../../context/ThemeContext';
 interface LayoutProps {
   children: React.ReactNode;
   onOpenResume?: () => void;
+  isResumeOpen?: boolean;
 }
 
-export default function Layout({ children, onOpenResume }: LayoutProps) {
+export default function Layout({ children, onOpenResume, isResumeOpen }: LayoutProps) {
   const { theme } = useTheme();
 
   return (
@@ -33,7 +34,7 @@ export default function Layout({ children, onOpenResume }: LayoutProps) {
       )}
 
       {/* Floating Header */}
-      <Navbar onOpenResume={onOpenResume} />
+      <Navbar onOpenResume={onOpenResume} isHidden={isResumeOpen} />
 
       {/* Main Content */}
       <main className="relative z-10 flex-1 pt-24 sm:pt-28 md:pt-32 print:p-0 print:pt-0">

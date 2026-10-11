@@ -17,7 +17,7 @@ function PortfolioApp() {
   const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
-    <Layout onOpenResume={() => setResumeOpen(true)}>
+    <Layout onOpenResume={() => setResumeOpen(true)} isResumeOpen={resumeOpen}>
       <div className="bento-container pb-20">
         <div className="bento-grid">
           {/* Chapter 1: Attention (Hero) */}
